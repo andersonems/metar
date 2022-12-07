@@ -506,7 +506,7 @@ void Decodedata(int i, String station, String parsedmetar) {
       }
    
     // Read in the visibility, being the 4 chars after "KT ". They could be slashes too, in which case we'll replace it with 9999 so it doesn't break.
-    // First, check the fifth character after "KT". If it is "V", it means variable wind direction is being reported, and we need to increase the substring offset by 7
+    // First, check the fifth character after "KT". If it is "V", it means variable wind direction is being reported, and we need to increase the substring offset by 8
     String currentvisibility;
 
       if (parsedmetar.substring(parsedmetar.lastIndexOf("KT") + 5) != "V") { //no variable winds reported
