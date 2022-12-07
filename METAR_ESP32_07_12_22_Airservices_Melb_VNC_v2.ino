@@ -119,7 +119,7 @@ String    host = "https://www.airservicesaustralia.com";
 
 
 // Set Up LEDS
-#define No_Stations          17      // Number of Stations also Number of LEDs
+#define No_Stations          18      // Number of Stations also Number of LEDs + 1
 #define DATA_PIN              4      // Connect to pin D5/P5 with 330 to 500 Ohm Resistor
 #define LED_TYPE         WS2812      // WD2811 or WS2812 or NEOPIXEL
 #define COLOR_ORDER         GRB      // WD2811 are RGB or WS2812 are GRB
@@ -147,6 +147,7 @@ std::vector<String> PROGMEM Stations {  //   << Set Up   - Do NOT change this li
   "YMES, EAST SALE, VIC       ",     // 15
   "YLTV, LATROBE VALLEY, VIC  ",     // 16
   "YYRM, YARRAM, VIC          ",     // 17
+  "NULL, STATION NAME         ",     // 18 // The last one gets chopped off, so a null is required at the start and end.
 };                                      // << Do NOT change this line
 
 PROGMEM String         rem[No_Stations + 1];  // Remarks
