@@ -490,16 +490,21 @@ void Decodedata(int i, String station, String parsedmetar) {
     // If it's NCD, stop looking. If it's anything else, read in the following three characters to tell us the cloud base
     String currentcloudtype;
     String currentcloudbase;
-    currentcloudbase = "999"; //set the cloudbase value as 999, being an obvious numeric null - it'll only stay this if the cloud type is NCD
+    currentcloudbase = "999"; //set the cloudbase value as 999, being an obvious numeric null - it'll only stay this if the cloud type is NCD or CAVOK are reported
     
     // Read in the three characters after the last instance of "// " (which should stop the //// // ////// strings confounding it)
       currentcloudtype = parsedmetar.substring(parsedmetar.lastIndexOf("// ") + 3,parsedmetar.lastIndexOf("// ") + 6);
       sky[i] = parsedmetar.substring(parsedmetar.lastIndexOf("// ") + 3,parsedmetar.lastIndexOf("// ") + 9); // load the entire lowest cloud statement into this variable for decoding later
-    // If the cloud type is anything other than "NCD", read in the next three characters which are the cloud base
-      if (currentcloudtype != "NCD") {
+    // If the cloud type is anything other than "NCD" or "CAVOK", read in the next three characters which are the cloud base
+      if (currentcloudtype != "NCD" or parsedmetar.indexOf("CAVOK") != -1) { 
         currentcloudbase = parsedmetar.substring(parsedmetar.indexOf(currentcloudtype) + 3,parsedmetar.indexOf(currentcloudtype) + 6);
       }
 
+   // If CAVOK is present in the METAR, set cloud type to "NCD" - near enough for our purposes and simplifies things
+      if (parsedmetar.indexOf("CAVOK") != -1) {
+        currentcloudtype = "NCD";
+      }
+   
     // Read in the visibility, being the 4 chars after "KT ". They could be slashes too, in which case we'll replace it with 9999 so it doesn't break.
     String currentvisibility;
       currentvisibility = parsedmetar.substring(parsedmetar.lastIndexOf("KT") + 3, parsedmetar.lastIndexOf("KT") + 7); //using lastIndexOf in case a station name has "KT" in it
