@@ -566,13 +566,13 @@ void Decodedata(int i, String station, String parsedmetar) {
   //  Serial.println(comment[i]);
 
     //determine the flight category (VFR, MVFR, IFR, LIFR) from what we have
-    // LIFR = cloudbase <500ft ANDOR visibility < 1 mile
-    // IFR = cloudbase 500-1000ft ANDOR visibility 1-3 miles
-    // MVFR = cloudbase 1000-3000ft ANDOR visibility 3-5 miles
-    // VFR = cloudbase >3000ft AND visibility >5 miles
+    // LIFR = cloudbase <500ft ANDOR visibility < 1500m
+    // IFR = cloudbase 500-1000ft ANDOR visibility 1500-3000m
+    // MVFR = cloudbase 1000-3000ft ANDOR visibility 5000-8000m
+    // VFR = cloudbase >3000ft AND visibility >8000m
       category[i] = "VFR"; //defaults to VFR unless information exists to the contrary.
       
-    if (intcloudbase > 030 and visab[i] > 5000) {
+    if (intcloudbase > 030 and visab[i] > 8000) {
       category[i] = "VFR";
     }
     if (intcloudbase >= 010 and intcloudbase < 030) {
@@ -580,7 +580,7 @@ void Decodedata(int i, String station, String parsedmetar) {
         category[i] = "MVFR";
       }    
     }
-    if (visab[i] >= 3000 and visab[i] < 5000) {
+    if (visab[i] >= 5000 and visab[i] < 8000) {
       category[i] = "MVFR";
     } 
     if (intcloudbase >= 005 and intcloudbase < 010) {
@@ -588,15 +588,14 @@ void Decodedata(int i, String station, String parsedmetar) {
       category[i] = "IFR";
       }
     }
-    if (visab[i] >= 1000 and visab[i] < 3000) {
+    if (visab[i] >= 1500 and visab[i] < 5000) {
       category[i] = "IFR";
     }
-    if (intcloudbase < 005 or visab[i] < 1000) {
+    if (intcloudbase < 005 or visab[i] < 1500) {
       if (currentcloudtype == "OVC" or currentcloudtype == "BKN") {      
       category[i] = "LIFR";
       }      
     }
-
 Serial.println(category[i]);    
 
   }
